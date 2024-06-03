@@ -1,47 +1,27 @@
 import pandas as pd
-import math
-from datetime import datetime
 
 DAYS_IN_YEAR = 1461
-MINUTES_IN_DAY = 350
+MINUTES_IN_YEAR = 525960
+MINUTES_IN_DAY = 360
 JON_BIRTH = "1999-11-06 11:15:00"
+JON_BIRTH_PD = pd.to_datetime(JON_BIRTH)
 
 class Jate:
     def getJate(self, irlTime):
         irlTimePD = pd.to_datetime(irlTime)
+
+        minutesSinceBirth = pd.Timedelta(irlTimePD - JON_BIRTH_PD) / pd.Timedelta(minutes=1)
+
+        curJYear = str(int(minutesSinceBirth / MINUTES_IN_YEAR))
+        curJDay = str(int((minutesSinceBirth % MINUTES_IN_YEAR) / MINUTES_IN_DAY))
+        curJMin = str(int((minutesSinceBirth % MINUTES_IN_YEAR) % MINUTES_IN_DAY))
+        curJSec = irlTimePD.second
         
-        jBirthPD = pd.to_datetime(JON_BIRTH)
-        curJYear = int(((irlTimePD - jBirthPD).total_seconds()/60)/525600)
-        curYear = int((str(datetime.now().year))[2:])
-        
-        if curYear < curJYear: 
-            lastJBirth = "20" + str(curYear) + "-11-06 11:15:00"
+        if curJSec < 10:
+            curJSec = str("0" + str(curJSec))
         else:
-            lastJBirth = "20" + str(curYear - 1) + "-11-06 11:15:00"
+            curJSec = str(curJSec)
 
-        lastJBirthPD = pd.to_datetime(lastJBirth)
-
-        minutesElapsed = pd.Timedelta(irlTimePD - lastJBirthPD) / pd.Timedelta(minutes = 1)
-        secondsElapsed = pd.Timedelta(irlTimePD - lastJBirthPD) / pd.Timedelta(seconds = 1)
-
-        relevantSeconds = secondsElapsed / 60
-
-        curJDaySecondsDay = int(relevantSeconds / MINUTES_IN_DAY)    
-
-        curJDaySecondsMin = int(relevantSeconds % MINUTES_IN_DAY)    
-
-        curJDay = int(minutesElapsed / MINUTES_IN_DAY)
-
-        curJMin = int(minutesElapsed % MINUTES_IN_DAY)
-
-        curJate = str(curJDay) + "/" + str(curJYear) + " " + str(curJMin) + " IJ"
+        curJate = [curJDay, curJYear, curJMin, curJSec]
 
         return curJate
-
-
-        
-
-
-    
-    
-
