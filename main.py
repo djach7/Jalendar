@@ -17,6 +17,7 @@ DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='?', intents=intents)
+bot.remove_command('help')
 
 jateObj = Jate()
 
@@ -31,7 +32,8 @@ async def on_ready():
 async def jate(ctx):
     current_time = datetime.now()
     curJate = jateObj.getJate(current_time)
-    await ctx.send("Today's jate is " + curJate[0] + "/" + curJate[1] + " " + curJate[2] + ":" + curJate[3] + " IJ")
+    # curJate is returned as [curJWeekday, curJWeek, curJDay, curJYear, curJMin, curJSec]
+    await ctx.send("Today is " + curJate[0] + ", " + curJate[1] + "/" + curJate[2] + "/" + curJate[3] + " " + curJate[4] + ":" + curJate[5] + " IJ")
 
 # On futureJate command, bot prints irl date specified and the corresponding jate and jime
 # Time is optionally specified on input
@@ -41,7 +43,24 @@ async def jate(ctx):
 @bot.command()
 async def futureJate(ctx, *, fDate: str):
     fJate = jateObj.getJate(pd.to_datetime(fDate))
-    await ctx.send("The date " + fDate + " is " + fJate[0] + "/" + fJate[1] + " " + fJate[2] + ":00 IJ on the Jalendar")
+    # fJate is returned as [curJWeekday, curJWeek, curJDay, curJYear, curJMin, curJSec]
+    await ctx.send("The date " + fDate + " is " + fJate[0] + ", " + fJate[1] + "/" + fJate[2] + "/" + fJate[3] + " " + fJate[4] + ":" + fJate[5] + " IJ on the Jalendar")
+
+@bot.command()
+async def jelp(ctx):
+    await ctx.send("""Welcome to the Jalendar! You found the hidden help message! Valid commands include: 
+    To print the current jate: `?jate`
+    To print a specified jate: `?futureJate 11/6/24 11:15`
+    To print this help message again: `?help`
+                   """)
+    
+@bot.command()
+async def help(ctx):
+    await ctx.send("""Welcome to the Jalendar! Valid commands include: 
+    To print the current jate: `?jate`
+    To print a specified jate: `?futureJate 11/6/24 11:15`
+    To print this help message again: `?help`
+                   """)
 
 
 bot.run(DISCORD_TOKEN)
