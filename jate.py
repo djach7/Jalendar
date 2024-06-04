@@ -9,7 +9,8 @@ JON_BIRTH_PD = pd.to_datetime(JON_BIRTH)
 DAYS_OF_JEEK = ["Jonsday", "Jewsday", "Jednesday", "Jursday", "Jiday", "Jaturday", "Jalday", "Jarday", "Jinday", "Junday"]
 
 class Jate:
-    # Return Jon Weekday, Jon Day, Jon Year, Jon Minute, and Jon Second
+    # Return Jon Weekday, Jon Week, Jon Day, Jon Year, Jon Minute, and Jon Second
+    # Return: Array of strings
     def getJate(self, irlTime):
         irlTimePD = pd.to_datetime(irlTime)
 

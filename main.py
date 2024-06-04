@@ -53,17 +53,7 @@ async def futureJate(ctx, *, fDate: str):
     # fJate is returned as [curJWeekday, curJWeek, curJDay, curJYear, curJMin, curJSec]
     await ctx.send("The date " + fDate + " is " + fJate[0] + ", " + fJate[1] + "/" + fJate[2] + "/" + fJate[3] + " " + fJate[4] + ":" + fJate[5] + " IJ on the Jalendar")
 
-@bot.command()
-async def jelp(ctx):
-    jonny = isItJonny(ctx.author.name)
-    if jonny[0]:
-        await ctx.send(jonny[1])
-    await ctx.send("""Welcome to the Jalendar! You found the hidden help message! Valid commands include: 
-    To print the current jate: `?jate`
-    To print a specified jate: `?futureJate 11/6/24 11:15`
-    To print this help message again: `?help`
-                   """)
-    
+# Standard help command. Prints out all available commands
 @bot.command()
 async def help(ctx):
     jonny = isItJonny(ctx.author.name)
@@ -75,6 +65,21 @@ async def help(ctx):
     To print this help message again: `?help`
                    """)
 
+# Silly copy of help command. Prints a slightly different message
+@bot.command()
+async def jelp(ctx):
+    jonny = isItJonny(ctx.author.name)
+    if jonny[0]:
+        await ctx.send(jonny[1])
+    await ctx.send("""Welcome to the Jalendar! You found the hidden help message! Valid commands include: 
+    To print the current jate: `?jate`
+    To print a specified jate: `?futureJate 11/6/24 11:15`
+    To print this help message again: `?help`
+                   """)
+    
+# Checks if the author of a message is Jon. If it is, returns a random
+# message lauding him
+# Return: Array of [boolean, string]
 def isItJonny(user):
     isJonny = False
     if user == "jflatley22":
