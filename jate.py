@@ -1,4 +1,6 @@
 import pandas as pd
+import datetime
+from holidays import Holidays
 
 # Constants of the Jalendar system
 DAYS_IN_YEAR = 1461
@@ -35,10 +37,23 @@ class Jate:
         # Current day of the Jeek
         curJWeekday = DAYS_OF_JEEK[curJDay % 10]
 
-        curJate = [curJWeekday, curJWeek, curJDay, curJYear, curJMin, curJSec]
+        checkHoliday = Jate.isHoliday(self, irlTime)
+
+        curJate = [curJWeekday, curJWeek, curJDay, curJYear, curJMin, curJSec, checkHoliday]
 
         # Stringify curJate for printing
         for x, item in enumerate(curJate):
             curJate[x] = str(item)
 
         return curJate
+    
+    def isHoliday(self, irlTime):
+        holidays = Holidays()
+        curIRLMonth = irlTime.month
+        curIRLDay = irlTime.day
+
+        holidayMessage = 0
+        if curIRLDay in holidays.holidays[curIRLMonth]:
+            holidayMessage = holidays.holidays[curIRLMonth][curIRLDay]
+
+        return holidayMessage

@@ -38,6 +38,8 @@ async def jate(ctx):
     curJate = jateObj.getJate(current_time)
     # curJate is returned as [curJWeekday, curJWeek, curJDay, curJYear, curJMin, curJSec]
     await ctx.send("Today is " + curJate[0] + ", " + curJate[1] + "/" + curJate[2] + "/" + curJate[3] + " " + curJate[4] + ":" + curJate[5] + " IJ")
+    if curJate[6] != "0":
+        await ctx.send("Happy " + curJate[6] + "!")
 
 # On futureJate command, bot prints irl date specified and the corresponding jate and jime
 # Time is optionally specified on input
