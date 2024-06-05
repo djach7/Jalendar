@@ -62,6 +62,24 @@ async def futureJate(ctx, *, fDate: str):
     if fJate[7]:
         await ctx.send("This jate is also " + fJate[7] + "'s birthday!")
 
+ # On jime command, bot prints the current jime
+ # I think this command is pointless but it is a decent meme, thank you Blake
+ # Example discord input: ?jime
+@bot.command()
+async def jime(ctx):
+    jonny = isItJonny(ctx.author.name)
+    if jonny[0]:
+        await ctx.send(jonny[1])
+    current_time = datetime.now()
+    curJate = jateObj.getJate(current_time)
+    # curJate is returned as [curJWeekday, curJWeek, curJDay, curJYear, curJMin, curJSec, checkHoliday, checkBirthday]
+    await ctx.send("The current jime is " + curJate[4] + ":" + curJate[5])
+    if curJate[6]:
+        await ctx.send("Happy " + curJate[6] + "!")
+    if curJate[7]:
+        await ctx.send("Happy birthday " + curJate[7] + "!")
+
+
 # Standard help command. Prints out all available commands
 @bot.command()
 async def help(ctx):
