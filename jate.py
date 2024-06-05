@@ -1,6 +1,7 @@
 import pandas as pd
 import datetime
 from holidays import Holidays
+from birthdays import Birthdays
 
 # Constants of the Jalendar system
 DAYS_IN_YEAR = 1461
@@ -39,7 +40,9 @@ class Jate:
 
         checkHoliday = Jate.isHoliday(self, irlTime)
 
-        curJate = [curJWeekday, curJWeek, curJDay, curJYear, curJMin, curJSec, checkHoliday]
+        checkBirthday = Jate.isBirthday(self, irlTime)
+
+        curJate = [curJWeekday, curJWeek, curJDay, curJYear, curJMin, curJSec, checkHoliday, checkBirthday]
 
         # Stringify curJate for printing
         for x, item in enumerate(curJate):
@@ -52,8 +55,19 @@ class Jate:
         curIRLMonth = irlTime.month
         curIRLDay = irlTime.day
 
-        holidayMessage = 0
+        holidayMessage = ""
         if curIRLDay in holidays.holidays[curIRLMonth]:
             holidayMessage = holidays.holidays[curIRLMonth][curIRLDay]
 
         return holidayMessage
+    
+    def isBirthday(self, irlTime):
+        birthdays = Birthdays()
+        curIRLMonth = irlTime.month
+        curIRLDay = irlTime.day
+
+        birthdayMessage = ""
+        if curIRLDay in birthdays.birthdays[curIRLMonth]:
+            birthdayMessage = birthdays.birthdays[curIRLMonth][curIRLDay]
+
+        return birthdayMessage

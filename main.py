@@ -36,10 +36,13 @@ async def jate(ctx):
         await ctx.send(jonny[1])
     current_time = datetime.now()
     curJate = jateObj.getJate(current_time)
-    # curJate is returned as [curJWeekday, curJWeek, curJDay, curJYear, curJMin, curJSec]
+    # curJate is returned as [curJWeekday, curJWeek, curJDay, curJYear, curJMin, curJSec, checkHoliday, checkBirthday]
     await ctx.send("Today is " + curJate[0] + ", " + curJate[1] + "/" + curJate[2] + "/" + curJate[3] + " " + curJate[4] + ":" + curJate[5] + " IJ")
-    if curJate[6] != "0":
+    if curJate[6]:
         await ctx.send("Happy " + curJate[6] + "!")
+    if curJate[7]:
+        await ctx.send("Happy birthday " + curJate[7] + "!")
+
 
 # On futureJate command, bot prints irl date specified and the corresponding jate and jime
 # Time is optionally specified on input
@@ -52,8 +55,12 @@ async def futureJate(ctx, *, fDate: str):
     if jonny[0]:
         await ctx.send(jonny[1])
     fJate = jateObj.getJate(pd.to_datetime(fDate))
-    # fJate is returned as [curJWeekday, curJWeek, curJDay, curJYear, curJMin, curJSec]
+    # fJate is returned as [curJWeekday, curJWeek, curJDay, curJYear, curJMin, curJSec, checkHoliday, checkBirthday]
     await ctx.send("The date " + fDate + " is " + fJate[0] + ", " + fJate[1] + "/" + fJate[2] + "/" + fJate[3] + " " + fJate[4] + ":" + fJate[5] + " IJ on the Jalendar")
+    if fJate[6]:
+        await ctx.send("This jate is also " + fJate[6] + "!")
+    if fJate[7]:
+        await ctx.send("This jate is also " + fJate[7] + "'s birthday!")
 
 # Standard help command. Prints out all available commands
 @bot.command()
@@ -91,7 +98,7 @@ def isItJonny(user):
         "Hello benevolent overlord! \n",
         "Thank you for gracing us with your presence. \n",
         "It is a pleasure to interact with you today, Sir. \n",
-        "It is an honor to serve you."
+        "It is an honor to serve you. \n"
     ]
 
     retMessage = ""

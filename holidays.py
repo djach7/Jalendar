@@ -13,16 +13,16 @@ class Holidays:
 
     }
     may = {
-
+        5 : "Jinco Je Jayo"
     }
     june = {
-        
+
     }
     july = {
         4 : "4th of Joly",
     }
     august = {
-
+        13 : "Madden Release Day"
     }
     september = {
 
